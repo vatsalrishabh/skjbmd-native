@@ -1,29 +1,57 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import colors from '../constant/colors'; // adjust path as per your structure
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Optional immersive mode setup (commented out)
+// let ImmersiveMode: any;
+// if (Platform.OS === 'android') {
+//   ImmersiveMode = require('react-native-immersive').default;
+// }
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+  // Optional immersive mode effect
+  // useEffect(() => {
+  //   if (Platform.OS === 'android' && ImmersiveMode) {
+  //     ImmersiveMode.fullLayout(true);
+  //     ImmersiveMode.setBarMode('FullSticky');
+  //     ImmersiveMode.enterImmersive();
+  //   }
+  // }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.appBackground,
+        },
+        headerTitleStyle: {
+          color: colors.headingText,
+          fontWeight: 'bold',
+        },
+        headerTintColor: colors.headingText, // Back button color
+        contentStyle: {
+          backgroundColor: colors.cardBackground,
+        },
+      }}
+    >
+     <Stack.Screen
+  name="index"
+  options={{
+    title: "मुख्य पृष्ठ",
+    headerStyle: {
+      backgroundColor: '#101828', // dark background (e.g., dark navy)
+    },
+    headerTintColor: '#ffffff', // white text/icons
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      color: '#ffffff',
+    },
+  }}
+/>
+
+      <Stack.Screen name="donate" options={{ title: "दान करें" }} />
+      <Stack.Screen name="[rzpPaymentId]" options={{ title: "रसीद" }} />
+      <Stack.Screen name="member" options={{ title: "सदस्य" }} />
+      <Stack.Screen name="chat" options={{ title: "चैटिंग" }} />
+    </Stack>
   );
 }
