@@ -4,6 +4,7 @@ const colors = {
   appBackground: '#ead6a6',
   cardBackground: '#fffaf0',
   footerBackground: '#101828',
+  placeholder:'#870209',
 };
 
 export default colors;

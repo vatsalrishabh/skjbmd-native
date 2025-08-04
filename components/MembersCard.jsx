@@ -1,21 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import colors from '../constant/colors';  // import your colors
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import colors from '../constant/colors';
 
-const MembersCard = ({ name, mobile, image, role, pad, onDownload }) => {
+const MembersCard = ({ name, mobile, image, role, fatherName, onDownload }) => {
+  const handleCall = () => {
+    Linking.openURL(`tel:${mobile}`);
+  };
+
   return (
     <View style={styles.card}>
-      <Image source={{ uri: image }} style={styles.avatar} />
-      <View style={styles.details}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.subText}>Role: {role}</Text>
-        <Text style={styles.subText}>Mobile: {mobile}</Text>
-        <Text style={styles.subText}>Pad: {pad}</Text>
+      <View style={styles.topSection}>
+        <Image source={{ uri: image }} style={styles.avatar} />
+        <View style={styles.details}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.subText}>Father's Name: {fatherName}</Text>
+          <Text style={styles.subText}>Role: {role}</Text>
+          <Text style={styles.subText}>Mobile: {mobile}</Text>
+        </View>
       </View>
-      <TouchableOpacity style={styles.downloadBtn} onPress={onDownload}>
-        <AntDesign name="download" size={20} color={colors.cardBackground} />
-      </TouchableOpacity>
+
+      <View style={styles.bottomActions}>
+        <TouchableOpacity style={styles.iconBtn} onPress={handleCall}>
+          <FontAwesome name="phone" size={20} color={colors.cardBackground} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconBtn} onPress={onDownload}>
+          <AntDesign name="download" size={20} color={colors.cardBackground} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -24,17 +35,19 @@ export default MembersCard;
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    backgroundColor: colors.cardBackground,  // #fffaf0 off-white beige
+    backgroundColor: colors.cardBackground,
     padding: 16,
     borderRadius: 12,
     marginBottom: 16,
-    alignItems: 'center',
     elevation: 3,
-    shadowColor: colors.headingText,  // subtle maroon shadow
+    shadowColor: colors.headingText,
     shadowOpacity: 0.1,
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 3 },
+  },
+  topSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   avatar: {
     width: 64,
@@ -48,16 +61,22 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.headingText, // #870209 maroon
+    color: colors.headingText,
   },
   subText: {
     fontSize: 14,
-    color: '#6e4a37', // warm brownish tone for subtext
+    color: '#6e4a37',
     marginTop: 2,
   },
-  downloadBtn: {
-    backgroundColor: colors.button,  // your button maroon color #b64000 or similar
+  bottomActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 12,
+  },
+  iconBtn: {
+    backgroundColor: colors.button,
     padding: 10,
     borderRadius: 8,
+    marginLeft: 10,
   },
 });

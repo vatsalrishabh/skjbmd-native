@@ -1,7 +1,6 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import colors from '../../constant/colors';
-import HeroSection from '../../components/HeroSection';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import HeroSection from '../components/HeroSection';
+import colors from '../constant/colors';
 
 const Home = () => {
   return (
